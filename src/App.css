@@ -1,0 +1,26 @@
+.footer-chat {
+  width: calc(65% - 66px);
+  height: 80px;
+  display:flex;
+  align-items: center;
+  position:absolute;
+  bottom: 0;
+  background-color: transparent;
+  border-top: 2px solid #EEE;
+}
+
+.input-field {
+  border:none !important;
+  width:60%;
+  height: 50px;
+  margin-left: 20px;
+  padding: 10px;
+  font-size: 13pt;
+  outline: none;
+
+}
+
+.footer-chat *::-webkit-input-placeholder {
+  color: #C0C0C0;
+  font-size: 13pt;
+}
