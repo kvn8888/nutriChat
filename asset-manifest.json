@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/nutriChat/static/css/main.e6c13ad2.css",
+    "main.js": "/nutriChat/static/js/main.a11f8a69.js",
+    "static/js/453.26e89d76.chunk.js": "/nutriChat/static/js/453.26e89d76.chunk.js",
+    "index.html": "/nutriChat/index.html",
+    "main.e6c13ad2.css.map": "/nutriChat/static/css/main.e6c13ad2.css.map",
+    "main.a11f8a69.js.map": "/nutriChat/static/js/main.a11f8a69.js.map",
+    "453.26e89d76.chunk.js.map": "/nutriChat/static/js/453.26e89d76.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.a11f8a69.js"
+  ]
+}
