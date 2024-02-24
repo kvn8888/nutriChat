@@ -55,9 +55,15 @@ function App() {
       <h1>NutriChat</h1>
       <h3>Type in a query, and see some macro nutrients!</h3>
       {response ? <p>{response.choices[0].message.content}</p>: <p></p>}
-      <input type="text" value={message} onChange={(handleChange)}/>
-      <button onClick={handleButtonPress}>Send</button>
-      <input type="text" placeholder="Enter API key" value={apiKey} onChange={handleChangeApiKey}/>
+      <br></br>
+      {!apiKey ? 
+      <input type="text" placeholder="Enter API key" value={apiKey} onChange={handleChangeApiKey}/> 
+      : <div>
+          <input type="text" value={message} onChange={(handleChange)}/>
+          <button onClick={handleButtonPress}>Send</button>
+        </div>
+      
+      }
     </div>
   );
   
