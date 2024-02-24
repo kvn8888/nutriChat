@@ -56,6 +56,9 @@ function App() {
       <h3>Type in a query, and see some macro nutrients!</h3>
       {response ? <p>{response.choices[0].message.content}</p>: <p></p>}
       <br></br>
+  
+      <p></p>
+
       {!apiKey ? 
       <input type="text" placeholder="Enter API key" value={apiKey} onChange={handleChangeApiKey}/> 
       : <div>
