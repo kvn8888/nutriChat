@@ -1,0 +1,19 @@
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+  
+  .fetched-message {
+    animation: fadeOut 3s forwards; /* Adjust time as needed */
+  }
+  .send-container {
+    display: flex; /* Use flexbox */
+    align-items: center; /* Align items vertically in the center */
+    gap: 10px; /* Optional: add some space between the button and the message */
+  }
+  
+  .fetched-message {
+    animation: fadeOut 3s forwards; /* Your existing fade-out animation */
+    margin: 0; /* Remove default margin to align properly */
+  }
+  

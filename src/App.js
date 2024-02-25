@@ -3,11 +3,13 @@ import { ProgressBar } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import './App.css';
 
+
 function App() {
   const [message, setMessage] = useState('');
   const [response, setResponse] = useState('');
   const [apiKey, setApiKey] = useState('');
   const [showProgress, setShowProgress] = useState(false);
+  const [showFetchedMessage, setShowFetchedMessage] = useState(false);
 
   const [nutrition, setNutrition] = useState({
     Calories: 0,
@@ -63,11 +65,17 @@ function App() {
       .then(data => {
         console.log(data);
         setResponse(data);
+        setShowFetchedMessage(true); 
+        setTimeout(() => setShowFetchedMessage(false), 3000); // Hide after 3 seconds
+
         // Assume data.choices[0].message.content is JSON with Calories, Carbs, Fats, Protein
         const content = JSON.parse(data.choices[0].message.content.match(/\{[\s\S]*?\}/g)[0]);
         setNutrition(content); // Update state with new nutritional values
       })
-      .catch(err => console.error(err));
+      .catch(err => console.error(err))
+      .finally(() => {
+        setTimeout(() => setShowFetchedMessage(false), 3000); // Hide after 3 seconds
+      });
   }
 
   const handleGoalChange = (event) => {
@@ -81,6 +89,12 @@ function App() {
   const handleSubmitGoals = () => {
     // Hide the goal input fields and show the progress bars
     setShowProgress(true);
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleButtonPress();
+    }
   };
   
 
@@ -110,14 +124,22 @@ function App() {
   
       <p></p>
 
+
       {!apiKey ? 
       <input type="text" placeholder="Enter API key" value={apiKey} onChange={handleChangeApiKey}/> 
       : <div>
-          <input type="text" value={message} onChange={(handleChange)}/>
+        <input
+            type="text"
+            value={message}
+            onChange={handleChange}
+            onKeyDown={handleKeyPress} // Added key press handler here
+            />
           <button onClick={handleButtonPress}>Send</button>
+            {showFetchedMessage && <p className="fetched-message">Fetched</p>}
         </div>
       
       }
+      <p>Powered by AI. Results may be inacurate</p>
     </div>
   );
   
