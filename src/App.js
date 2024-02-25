@@ -1,10 +1,28 @@
 import { useState } from 'react';
+import { ProgressBar } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import './App.css';
 
 function App() {
   const [message, setMessage] = useState('');
   const [response, setResponse] = useState('');
   const [apiKey, setApiKey] = useState('');
+  const [showProgress, setShowProgress] = useState(false);
+
+  const [nutrition, setNutrition] = useState({
+    Calories: 0,
+    Carbs: 0,
+    Fats: 0,
+    Protein: 0,
+  });
+
+  const [goals, setGoals] = useState({
+    Calories: null,
+    Carbs: null,
+    Fats: null,
+    Protein: null,
+  });
+
   
   const options = {
     method: 'POST',
@@ -45,15 +63,48 @@ function App() {
       .then(data => {
         console.log(data);
         setResponse(data);
+        // Assume data.choices[0].message.content is JSON with Calories, Carbs, Fats, Protein
+        const content = JSON.parse(data.choices[0].message.content);
+        setNutrition(content); // Update state with new nutritional values
       })
       .catch(err => console.error(err));
   }
+
+  const handleGoalChange = (event) => {
+    const { name, value } = event.target;
+    setGoals((prevGoals) => ({
+      ...prevGoals,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmitGoals = () => {
+    // Hide the goal input fields and show the progress bars
+    setShowProgress(true);
+  };
   
 
   return(
     <div className='App'>
       <h1>NutriChat</h1>
       <h3>Type in a query, and see some macro nutrients!</h3>
+      {!showProgress && (
+        <div className="goals">
+          <input type="number" name="Calories" placeholder="Goal Calories" value={goals.Calories} onChange={handleGoalChange} />
+          <input type="number" name="Carbs" placeholder="Goal Carbs (g)" value={goals.Carbs} onChange={handleGoalChange} />
+          <input type="number" name="Fats" placeholder="Goal Fats (g)" value={goals.Fats} onChange={handleGoalChange} />
+          <input type="number" name="Protein" placeholder="Goal Protein (g)" value={goals.Protein} onChange={handleGoalChange} />
+          <button onClick={handleSubmitGoals}>Submit Goals</button>
+        </div>
+      )}
+      {showProgress && (
+        <div>
+          <ProgressBar variant="success" now={nutrition.Calories} max={goals.Calories} label={`Calories: ${nutrition.Calories}/${goals.Calories}`} />
+          <ProgressBar variant="info" now={nutrition.Carbs} max={goals.Carbs} label={`Carbs: ${nutrition.Carbs}g/${goals.Carbs}g`} />
+          <ProgressBar variant="warning" now={nutrition.Fats} max={goals.Fats} label={`Fats: ${nutrition.Fats}g/${goals.Fats}g`} />
+          <ProgressBar variant="danger" now={nutrition.Protein} max={goals.Protein} label={`Protein: ${nutrition.Protein}g/${goals.Protein}g`} />
+        </div>
+      )}
       {response ? <p>{response.choices[0].message.content}</p>: <p></p>}
       <br></br>
   
