@@ -36,7 +36,7 @@ function App() {
       messages: [
         {
           role: 'system',
-          content: 'Only respond in JSON. The JSON will have attributes of Calories, Carbs, Fats, Protein ONLY. All four of these attributes. NEVER OUTPUT ANYTHING OUTSIDE THE THREE ATTRIBUTES INSIDE THE JSON. **Important**: Once you have finished outputting JSON, end the response immediately, NEVER PUT UNITS!!!!!!!!!!!!!'
+          content: 'Only respond in JSON. The JSON will have attributes of Calories, Carbs, Fats, Protein ONLY. All four of these attributes. You **must** assign values to any object. NEVER OUTPUT ANYTHING OUTSIDE THE THREE ATTRIBUTES INSIDE THE JSON. **Important**: Once you have finished outputting JSON, end the response immediately, NEVER PUT UNITS!!!!!!!!!!!!! And dont make multiple JSON objects, only one!'
         },
         {role: 'user', content: message}
       ]
@@ -52,7 +52,7 @@ function App() {
   }
 
   const handleButtonPress = () => {
-    fetch('/api/chat/completions', options)
+    fetch('https://api.perplexity.ai/chat/completions', options)
       .then(response => {
         console.log(response); // Log the raw response
         if (!response.ok) {
@@ -64,7 +64,7 @@ function App() {
         console.log(data);
         setResponse(data);
         // Assume data.choices[0].message.content is JSON with Calories, Carbs, Fats, Protein
-        const content = JSON.parse(data.choices[0].message.content);
+        const content = JSON.parse(data.choices[0].message.content.match(/\{[\s\S]*?\}/g)[0]);
         setNutrition(content); // Update state with new nutritional values
       })
       .catch(err => console.error(err));
@@ -105,7 +105,7 @@ function App() {
           <ProgressBar variant="danger" now={nutrition.Protein} max={goals.Protein} label={`Protein: ${nutrition.Protein}g/${goals.Protein}g`} />
         </div>
       )}
-      {response ? <p>{response.choices[0].message.content}</p>: <p></p>}
+      {/* {response ? <p>{response.choices[0].message.content}</p>: <p></p>} */}
       <br></br>
   
       <p></p>
