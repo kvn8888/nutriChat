@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>My App</title>
+  <link href="/nutriChat/src/index.css" rel="stylesheet">
   <script>
     function handleButtonPress() {
       var apiKey = document.getElementById('apiKey').value;
@@ -42,16 +43,26 @@
         document.getElementById('apiKey').style.display = 'none';
         document.getElementById('submitButton').style.display = 'none';
     }
+
+    function placeHolder() {
+  document.getElementById("chatbox").placeholder = "";
+}
   </script>
 </head>
 <body>
-  <div class='App'>
+  <div id='bodybox'>
     <h1>NutriChat</h1>
-    <h3>Type in a query, and see some macro nutrients!</h3>
-    <p id='response'></p>
-    <input id='apiKey' type='text' placeholder='Enter API Key' />
-    <input id='message' type='text' placeholder='Enter Message' />
-    <button onclick='handleButtonPress()'>Send</button>
-  </div>
+    <div id='chatborder'>
+      <p id="chatlog7" class="chatlog">&nbsp;</p>
+      <p id="chatlog6" class="chatlog">&nbsp;</p>
+      <p id="chatlog5" class="chatlog">&nbsp;</p>
+      <p id="chatlog4" class="chatlog">&nbsp;</p>
+      <p id="chatlog3" class="chatlog">&nbsp;</p>
+      <p id="chatlog2" class="chatlog">&nbsp;</p>
+      <p id="response" class="chatlog">&nbsp;</p>
+      <input id='apiKey' name="apiChat" type='text' placeholder='Enter API Key'/>
+      <input type="text" name="chat" id="message" placeholder="Hi there! Type here to talk to me." onfocus="placeHolder()">
+      <button id="sendbtn" onclick='handleButtonPress()'>Send</button>
+    </div>
 </body>
 </html>
